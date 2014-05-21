@@ -6,6 +6,6 @@ SCC <- readRDS("Source_Classification_Code.rds")
 emission_totals <- data.frame(year=as.integer(), total_emissions=as.numeric())
 
 for (year in unique(NEI$year)) {
-  total <- with(subset(NEI, year=year), sum(Emissions))
-  emission_totals[nrow(emission_totals)+1] <- t(c(year, total))
+  total <- sum(with(NEI, subset(Emissions, year==year)))
+  emission_totals[nrow(emission_totals)+1,] <- t(c(year, total))
 }
