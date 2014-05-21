@@ -24,7 +24,16 @@ for (ayear in unique(vehicle_emissions$year)) {  ## for each year
 ##  draw graph and save to png
 png(file="plot6.png", width=504, height=504, bg="white")  ## engage png device
 
-graph1 <- ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ city) + geom_bar(stat="identity", aes(fill=factor(year))) + xlab("Year") + ylab("PM 2.5 Emissions (tons)") + ggtitle("Comparison of Total PM 2.5 Emissions in Baltimore City, MD and Los Angeles County, CA")
+mf_labeller <- function(var, value){
+    value <- as.character(value)
+    if (var=="city") { 
+        value[value=="24510"] <- "Baltimore City"
+        value[value=="06037"]   <- "LA County"
+    }
+    return(value)
+}
+
+graph1 <- ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ city, labeller=mf_labeller) + geom_bar(stat="identity", aes(fill=factor(year))) + xlab("Year") + ylab("PM 2.5 Emissions (tons)") + ggtitle("Comparison of Total PM 2.5 Emissions\nin Baltimore City, MD and Los Angeles County, CA")
 
 print(graph1)
 
