@@ -1,5 +1,5 @@
 ## Load libraries
-library("ggplot2")
+require("ggplot2")
 
 ## Read in data
 NEI <- readRDS("summarySCC_PM25.rds")
@@ -16,8 +16,10 @@ for (ayear in unique(NEI$year)) {  ## for each year
 }
 
 ##  draw graph and save to png
-png(file="plot3.png", width=504, height=504, bg="white")  ## engage png device
+png(file="plot3.png", width=600, height=504, bg="white")  ## engage png device
 
-ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity", aes(fill=factor(year)))  ## create plot
+graph1 <- ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity", aes(fill=factor(year))) + xlab("Year") + ylab("PM 2.5 Emissions (tons)") + ggtitle("Total PM 2.5 Emissions in Baltimore City, MD Divided By Type")
 
-dev.off()  # ... and close device
+print(graph1)
+
+dev.off()  ## ... and close device

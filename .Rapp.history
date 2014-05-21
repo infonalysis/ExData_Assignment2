@@ -1,0 +1,224 @@
+dir()
+NEI <- readRDS("summarySCC_PM25.rds")#
+SCC <- readRDS("Source_Classification_Code.rds")
+head(NEI)
+head(SCC)
+?subset
+class(subset(NEI, year=2009))
+nrow(subset(NEI, year=2009))
+nrow(NEI)
+class(NEI$year)
+nrow(subset(NEI, year==2009))
+with(NEI, subset(Emissions, year==1999))
+sum(with(NEI, subset(Emissions, year==1999)))
+sum(with(NEI, subset(Emissions, year==2002)))
+emission_totals <- data.frame(year=as.integer(), total_emissions=as.numeric())
+for (year in unique(NEI$year)) {#
+  total <- sum(with(NEI, subset(Emissions, year==year)))#
+  emission_totals[nrow(emission_totals)+1] <- t(c(year, total))#
+}
+for (year in unique(NEI$year)) {#
+  total <- sum(with(NEI, subset(Emissions, year==year)))#
+  emission_totals[nrow(emission_totals)+1] <- c(year, total)#
+}
+for (year in unique(NEI$year)) {#
+  total <- sum(with(NEI, subset(Emissions, year==year)))#
+##  emission_totals[nrow(emission_totals)+1] <- t(c(year, total))#
+  print(t(c(year, total)))#
+}
+for (year in unique(NEI$year)) {#
+  total <- sum(with(NEI, subset(Emissions, year==year)))#
+  emission_totals[nrow(emission_totals)+1,] <- t(c(year, total))#
+}
+emission_totals
+?barplot
+barplot(emission_totals$total_emissions, names.arg=emission_totals$year)
+sum(NEI$Emissions)
+emission_totals <- data.frame(year=as.integer(), total_emissions=as.numeric())
+for (year in unique(NEI$year)) {#
+  total <- sum(with(NEI, subset(Emissions, year==year)))#
+  emission_totals[nrow(emission_totals)+1,] <- t(c(year, total))#
+}
+emission_totals
+emission_totals <- data.frame(year=as.integer(), total_emissions=as.numeric())
+for (ayear in unique(NEI$year)) {#
+  total <- sum(with(NEI, subset(Emissions, year==ayear)))#
+  emission_totals[nrow(emission_totals)+1,] <- t(c(year, total))#
+}
+emission_totals
+emission_totals <- data.frame(year=as.integer(), total_emissions=as.numeric())
+for (ayear in unique(NEI$year)) {#
+  total <- sum(with(NEI, subset(Emissions, year==ayear)))#
+  emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, total))#
+}
+emission_totals
+barplot(emission_totals$total_emissions, names.arg=emission_totals$year)
+barplot(emission_totals$total_emissions, names.arg=emission_totals$year, xlab="Year", ylab="PM 2.5 Emissions (tons)", main="Total PM 2.5 Emissions in the U.S.")
+?png
+source("plot1.R")
+sum(with(NEI, subset(Emissions, fips==24510)))
+head NEI
+head(NEI)
+sum(with(NEI, subset(Emissions, fips==09001)))
+class(NEI$fips)
+sum(with(NEI, subset(Emissions, fips=="09001")))
+sum(with(NEI, subset(Emissions, fips=="24510")))
+sum(with(NEI, subset(Emissions, fips=="24510" & year==2002)))
+sum(with(NEI, subset(Emissions, fips=="24510" & year==1999)))
+sum(with(NEI, subset(Emissions, fips=="24510" & year==2008)))
+source("plot2.R")
+source("plot2.R")
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.numeric())
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in unique(NEI$type)) {  ## and for each type#
+  		total <- sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type=="atype")))  ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, atype, total))  ## write to results data frame#
+}
+}
+warnings()
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.numeric())
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type=="atype")))  ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, atype, total))  ## write to results data frame#
+}
+}
+warnings()
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.numeric(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type=="atype")))  ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, atype, total))  ## write to results data frame#
+	}#
+}
+emission_totals
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.numeric(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype)))  ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, atype, total))  ## write to results data frame#
+	}#
+}
+emission_totals
+library("ggplot2")
+qplot(year, total_emissions, data=emission_totals, facets=. ~ drv)
+qplot(year, total_emissions, data=emission_totals, facets=. ~ type)
+?round
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.numeric(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, atype, total))  ## write to results data frame#
+	}#
+}
+qplot(year, total_emissions, data=emission_totals, facets=. ~ type)
+class(total_emissions)
+class(emission_totals$total_emissions)
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.numeric(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(as.integer(ayear), as.character(atype), as.integer(total)))  ## write to results data frame#
+	}#
+}
+class(emission_totals$total_emissions)
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.integer(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(as.integer(ayear), as.character(atype), as.integer(total)))  ## write to results data frame#
+	}#
+}
+class(emission_totals$total_emissions)
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.integer(), stringsAsFactors=FALSE)
+class(emission_totals$total_emissions)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(as.integer(ayear), as.character(atype), as.integer(total)))  ## write to results data frame#
+	}#
+}
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.integer(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals[nrow(emission_totals)+1,] <- t(c(as.integer(ayear), as.character(atype), as.integer(total)))  ## write to results data frame#
+	}#
+}
+class(emission_totals$total_emissions)
+emission_totals
+summary(emission_totals)
+c(4, 5, 6)
+class(c(4, 5, 6))
+class(c(4, "5", 6))
+class(c(as.integer(4), "5", 6))
+list(1,2,3,4,5)
+list(1,2,3,"4",5)
+list(1,2,3,"4",5, "apple")
+list(1,2,3,"4",5, "apple",5)
+data.frame(year=as.integer(2009), type=as.character(something), total=as.integer(201300), stringsAsFactors=FALSE)
+data.frame(year=as.integer(2009), type=as.character("something"), total=as.integer(201300), stringsAsFactors=FALSE)
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total_emissions=as.integer(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals <- rbind(emission_totals, data.frame(as.integer(ayear), as.character(atype), as.integer(total)))  ## write to results data frame#
+	}#
+}
+summary(emission_totals)
+emission_totals
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total=as.integer(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals <- rbind(emission_totals, data.frame(year=as.integer(ayear), type=as.character(atype), total=as.integer(total)))  ## write to results data frame#
+	}#
+}
+emission_totals
+summary(emission_totals)
+class(emission_totals)
+str(emission_totals)
+emission_totals <- data.frame(year=as.integer(), type=as.character(), total=as.integer(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals <- rbind(emission_totals, data.frame(year=as.integer(ayear), type=as.character(atype), total=as.integer(total), stringsAsFactors=FALSE))  ## write to results data frame#
+	}#
+}
+str(emission_totals)
+qplot(year, total, data=emission_totals, facets=. ~ type)
+emission_totals <- data.frame(year=as.character(), type=as.character(), total=as.integer(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals <- rbind(emission_totals, data.frame(year=as.character(ayear), type=as.character(atype), total=as.integer(total), stringsAsFactors=FALSE))  ## write to results data frame#
+	}#
+}
+qplot(year, total, data=emission_totals, facets=. ~ type)
+ggplot(emission_totals, aes(x=year, y=total)) + geom_line() + facet_grid(. ~ type)
+emission_totals
+ggplot(emission_totals, aes(x=year, y=total)) + facet_grid(. ~ type) + geom_line()
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_line()
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar()
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity")
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity", aes(fill=factor(year)))
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity", aes(fill=factor(year))) + xlab("Year") + ylab("PM 2.5 Emissions (tons)") + ggtitle("Total PM 2.5 Emissions in Baltimore City, MD Divided By Type")
+source("plot3.R")
+NEI <- readRDS("summarySCC_PM25.rds")#
+SCC <- readRDS("Source_Classification_Code.rds")
+emission_totals <- data.frame(year=as.character(), type=as.character(), total=as.integer(), stringsAsFactors=FALSE)
+for (ayear in unique(NEI$year)) {  ## for each year#
+	for (atype in as.character(unique(NEI$type))) {  ## and for each type#
+  		total <- round(sum(with(NEI, subset(Emissions, fips=="24510" & year==ayear & type==atype))))   ## calculate total emissions for baltimore city#
+  		emission_totals <- rbind(emission_totals, data.frame(year=as.character(ayear), type=as.character(atype), total=as.integer(total), stringsAsFactors=FALSE))  ## write to results data frame#
+	}#
+}
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity", aes(fill=factor(year))) + xlab("Year") + ylab("PM 2.5 Emissions (tons)") + ggtitle("Total PM 2.5 Emissions in Baltimore City, MD Divided By Type")
+png(file="plot3.png", width=504, height=504, bg="white")  ## engage png device
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity", aes(fill=factor(year))) + xlab("Year") + ylab("PM 2.5 Emissions (tons)") + ggtitle("Total PM 2.5 Emissions in Baltimore City, MD Divided By Type")
+dev.off()
+source("plot3.R")
+dir()
+source("plot3.R")
+source("plot3.R")
+library("ggplot2")
