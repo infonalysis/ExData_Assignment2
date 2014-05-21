@@ -1,11 +1,17 @@
 ## Read in data
-setwd("/home/user/Documents/coursera/exploratory\ analysis/assignments/ExData_Assignment2")
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
+## Calculate annual totals
 emission_totals <- data.frame(year=as.integer(), total_emissions=as.numeric())
 
-for (year in unique(NEI$year)) {
-  total <- sum(with(NEI, subset(Emissions, year==year)))
-  emission_totals[nrow(emission_totals)+1,] <- t(c(year, total))
+for (ayear in unique(NEI$year)) {  ## for each year
+  total <- sum(with(NEI, subset(Emissions, year==ayear)))  ## calculate total emissions
+  emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, total))  ## write to results data frame
 }
+
+
+##  draw graph and save to png
+png(file="plot1.png", width=504, height=504, bg="white")  ## engage png device
+barplot(emission_totals$total_emissions, names.arg=emission_totals$year, xlab="Year", ylab="PM 2.5 Emissions (tons)", main="Total PM 2.5 Emissions in the U.S.")  ## barplot
+dev.off()  # ... and close device
