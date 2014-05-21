@@ -18,7 +18,6 @@ for (ayear in unique(NEI$year)) {  ## for each year
 ##  draw graph and save to png
 png(file="plot3.png", width=504, height=504, bg="white")  ## engage png device
 
-qplot(year, total, data=emission_totals, facets=. ~ type)
+ggplot(emission_totals, aes(x=year, y=total)) + geom_line() + facet_grid(. ~ type)  ## create plot
 
-## barplot(emission_totals$total_emissions, names.arg=emission_totals$year, xlab="Year", ylab="PM 2.5 Emissions (tons)", main="Total PM 2.5 Emissions in Baltimore City, MD")  ## barplot
 dev.off()  # ... and close device
