@@ -18,6 +18,6 @@ for (ayear in unique(NEI$year)) {  ## for each year
 ##  draw graph and save to png
 png(file="plot3.png", width=504, height=504, bg="white")  ## engage png device
 
-ggplot(emission_totals, aes(x=year, y=total)) + geom_line() + facet_grid(. ~ type)  ## create plot
+ggplot(emission_totals, aes(year, total)) + facet_grid(. ~ type) + geom_bar(stat="identity", aes(fill=factor(year)))  ## create plot
 
 dev.off()  # ... and close device
