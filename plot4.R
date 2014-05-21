@@ -11,8 +11,8 @@ coal_emissions <- NEI[NEI$SCC %in% coal$SCC,]  ## subset emissions info to coal 
 emission_totals <- data.frame(year=as.integer(), total_emissions=as.numeric())
 
 for (ayear in unique(coal_emissions$year)) {  ## for each year
-  total <- sum(with(coal_emissions, subset(Emissions, year==ayear)))  ## calculate total emissions for baltimore city
-  emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, total))  ## write to results data frame
+  total <- sum(with(coal_emissions, subset(Emissions, year==ayear)))  ## calculate total emissions due to coal combuston
+    emission_totals[nrow(emission_totals)+1,] <- t(c(ayear, total))  ## write to results data frame
 }
 
 ##  draw graph and save to png
